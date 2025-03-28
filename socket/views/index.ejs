@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6">
+
+    <!-- Buttons Section -->
+    <div class="flex space-x-6 mb-6">
+        <button class="connect px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+            Connect
+        </button>
+        <button class="disconnect px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-300">
+            Disconnect
+        </button>
+    </div>
+
+    <!-- Message Input Section -->
+    <div class="flex items-center space-x-4 bg-white p-4 rounded-lg shadow-md">
+        <input type="text" placeholder="Type your message..." 
+            class="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <button class="message px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+            Send
+        </button>
+    </div>
+    <script 
+    src="https://cdn.socket.io/3.1.3/socket.io.min.js" 
+    integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" 
+    crossorigin="anonymous">
+    </script>
+    <script>
+        let Connect=document.querySelector('.connect')
+        let disconnect=document.querySelector('.disconnect')
+        let message=document.querySelector('.message')
+        let input=document.querySelector('input')
+
+        let socket;
+
+        Connect.addEventListener('click',()=>{
+            socket=io()
+        })
+        message.addEventListener('click',()=>{
+            socket.emit('somemessage', input.value)
+            socket.on('value',(data)=>{
+            console.log(data)
+        })
+        })
+       
+        disconnect.addEventListener('click',()=>{
+            socket.disconnect()
+        })
+    </script>
+</body>
+</html>
